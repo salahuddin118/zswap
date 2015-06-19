@@ -637,7 +637,7 @@ void swap_free(swp_entry_t entry)
 /*
  * Called after dropping swapcache to decrease refcnt to swap entries.
  */
-void swapcache_free(swp_entry_t entry, struct page *page)
+void swapcache_free(swp_entry_t entry) // struct page *page)
 {
 	struct swap_info_struct *p;
 	unsigned char count;
@@ -645,8 +645,8 @@ void swapcache_free(swp_entry_t entry, struct page *page)
 	p = swap_info_get(entry);
 	if (p) {
 		count = swap_entry_free(p, entry, SWAP_HAS_CACHE);
-		if (page)
-			mem_cgroup_uncharge_swapcache(page, entry, count != 0);
+		//if (page)
+		//	mem_cgroup_uncharge_swapcache(page, entry, count != 0);
 		spin_unlock(&p->lock);
 	}
 }

@@ -32,6 +32,8 @@ modules.builtin
 *.lzo
 *.patch
 *.gcno
+zImage
+run.sh
 
 #
 # Top-level generic files
