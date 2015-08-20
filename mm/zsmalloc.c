@@ -1596,12 +1596,17 @@ static int reclaim_zspage(struct zs_pool *pool, struct page *first_page)
 				return ret;
 			}
 			obj_free(handle, page, offset);
+			//Sagor: Fix zs stat
+			zs_stat_dec(class, OBJ_USED, 1);
 		}
 
 		page = get_next_page(page);
 	}
 
 	free_zspage(first_page);
+	// Sagor: Fix zs stat
+	zs_stat_dec(class, OBJ_ALLOCATED, get_maxobj_per_zspage(
+				class->size, class->pages_per_zspage));
 
 	atomic_long_sub(class->pages_per_zspage, &pool->pages_allocated);
 
